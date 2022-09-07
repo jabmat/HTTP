@@ -157,7 +157,7 @@ const XMLRequestPUT = (body) => {
 		console.error('Something went wrong!');
 	};
 };
-XMLRequestPUT(data2); // wywołanie funkcji
+// XMLRequestPUT(data2); // wywołanie funkcji
 
 // b) Fetch API + then chain
 
@@ -178,7 +178,7 @@ const fetchRequestPUT = () => {
 		.then((data) => console.log(data))
 		.catch((err) => console.error(err));
 };
-fetchRequestPUT(); // wywołanie funkcji
+// fetchRequestPUT(); // wywołanie funkcji
 
 // c) Fetch API + async/await
 
@@ -203,4 +203,93 @@ const asyncFetchRequestPUT = async () => {
 		console.error(err);
 	}
 };
-asyncFetchRequestPUT(); // wywołanie funkcji
+// asyncFetchRequestPUT(); // wywołanie funkcji
+
+// 4. Metoda PATCH
+
+// PUT usuwa dane i wstawia tam nowe
+// PATCH aktualizauje pojedyncze części danych w bazie lub doda nowe - nic nie usuwa, zwraca 200/201
+// request PATCH tak samo jak POST i PUT przyjmuje body
+
+// const person = {
+// 	name: 'Andrew',
+// 	age: 30,
+// 	married: true
+// }
+
+// person.age = 31
+// a) XMLHttpRequest
+// const person = JSON.stringify({
+// 	name: 'Andrew',
+// 	age: 30,
+// 	married: true,
+// });
+
+const XMLRequestPATCH = () => {
+	const body = JSON.stringify({
+		name: 'Matt',
+		age: 34,
+		married: false,
+	});
+
+	const request = new XMLHttpRequest();
+	request.open('PATCH', 'http://jsonplaceholder.typicode.com/todos/1');
+	request.send(body);
+	request.onload = function () {
+		console.log(request.status);
+	};
+
+	request.onerror = function () {
+		console.error('Something went wrong, Mate!');
+	};
+};
+// XMLRequestPATCH(); // wywołanie funkcji
+
+// b) Fetch API + then chain
+
+const fetchRequestPATCH = () => {
+	const options = {
+		method: 'PATCH',
+		body: JSON.stringify({
+			name: 'Matt',
+			age: 34,
+			married: false,
+		}),
+	};
+
+	fetch('http://jsonplaceholder.typicode.com/todos/1', options)
+		.then((response) => {
+			console.log(response.status);
+			return response.json();
+		})
+		.then((data) => console.log(data))
+		.catch((err) => console.error(err));
+};
+// fetchRequestPATCH(); // wywołanie funkcji
+
+// c) Fetch API + async/await
+
+const asyncFetchRequestPATCH = async () => {
+	const options = {
+		method: 'PATCH',
+		body: JSON.stringify({
+			name: 'Matt',
+			age: 34,
+			married: true,
+		}),
+	};
+	try {
+		const response = await fetch(
+			'http://jsonplaceholder.typicode.com/todos/2',
+			options
+		);
+		console.log(response.status);
+		const data = await response.json();
+		console.log(data);
+	} catch (err) {
+		console.error('Something went wrong!', err);
+	}
+};
+asyncFetchRequestPATCH(); // wywołanie funkcji
+
+// Nie zapominać o error handlingu
