@@ -290,6 +290,82 @@ const asyncFetchRequestPATCH = async () => {
 		console.error('Something went wrong!', err);
 	}
 };
-asyncFetchRequestPATCH(); // wywołanie funkcji
+// asyncFetchRequestPATCH(); // wywołanie funkcji
 
 // Nie zapominać o error handlingu
+
+// 5. Metoda DELTE
+
+// DELETE usuwa zasoby w bazie danych
+
+// A) error handling dla każdej funkcji
+// B) sprawdź co się dzieje, gdy odwołamy się w URLu do całej listy (/posts/), sprawdź co się dziej, gdy odwołamy się do konkretnego obiektu (/posts/1)
+// metoda a) przy całej liście zwraca 404, przy obiekcie OK
+// metoda b) przy całej liście zwraca 404, przy obiekcie OK
+// metoda c) przy całej liście zwraca 404, przy obiekcie OK
+
+// C) odpowiedz sobie na pytanie czy metoda DELETE potrzebuje body
+//  metoda a) z body i bez body nadal 200
+//  metoda b) wymaga określenia body, ale fetch bez 'options' jest OK
+//  metoda c) wymaga określenia body, ale fetch bez 'options' jest OK
+
+// D) sprawdź co dostajemy w response przy metodzie DELETE
+// metoda a) jedynie status
+// metoda b) status + {[[Prototype]]: Object}
+// metoda c) status + {[[Prototype]]: Object}
+// ---------------
+
+// 5.a) XMLHttpRequest
+// 5.b) Fetch API + then chain
+// 5.c) Fetch API + async/await
+
+// 5.DELETE.a) XMLHttpRequest
+const XMLRequestDELETE = () => {
+	const request = new XMLHttpRequest();
+	request.open('DELETE', 'http://jsonplaceholder.typicode.com/todos/2');
+	request.send();
+	request.onload = function () {
+		console.log(request.status);
+		const data = JSON.parse(request.responseText);
+		console.log(data);
+	};
+
+	request.onerror = function () {
+		console.error('Somethings wrong');
+	};
+};
+// XMLRequestDELETE(); // wywołanie funkcji
+
+// 5.DELETE.b) Fetch API + then chain
+
+const fetchRequestDELETE = () => {
+	const options = {
+		method: 'DELETE',
+	};
+
+	fetch('http://jsonplaceholder.typicode.com/todos/2', options)
+		.then((response) => {
+			console.log(response.status);
+			return response.json();
+		})
+		.then((data) => console.log(data))
+		.catch((err) => console.error('Somethings wrong', err));
+};
+// fetchRequestDELETE(); // wywołanie funkcji
+
+// 5.DELETE.c) Fetch API + async/await
+
+const asyncFetchRequestDELETE = async () => {
+	try {
+		const response = await fetch(
+			'http://jsonplaceholder.typicode.com/todos/1',
+			{ method: 'DELETE' }
+		);
+		console.log(response.status);
+		const data = await response.json();
+		console.log(data);
+	} catch (err) {
+		console.error('Somethings wrong', err);
+	}
+};
+// asyncFetchRequestDELETE(); // wywołanie funkcji
