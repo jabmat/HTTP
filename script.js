@@ -369,3 +369,111 @@ const asyncFetchRequestDELETE = async () => {
 	}
 };
 // asyncFetchRequestDELETE(); // wywołanie funkcji
+
+// 08.09.2022 HTTP dzień 4 - zadania x1h:
+console.log('08.09.2022 HTTP dzień 4 - zadania x1h:');
+// 17:40 zadanie 1:
+console.log('17:40 zadanie 1:');
+// Zad 1.
+// https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=twojapikey
+// a) Wykonaj GET request do podanego URLa bez parametru apikey, zanotuj co się dzieje
+// b) użyj async/await i fetch()
+// c) wykonaj console.log(response), response.status
+// d) metoda .json() i console.log(data)
+
+const asyncFetchAlphaRequestGET = async () => {
+	const response = await fetch(
+		'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=G9Z8K54FKBUFGQ1J'
+	);
+	const data = await response.json();
+	// console.log(response);
+	console.log(response.status);
+	console.log(data);
+	// const tS = console.log(data['Times Series (5min)']);
+	const tS = data['Time Series (5min)'];
+	// const tSN = Number(tS);
+	console.log(tS, typeof tS);
+	// console.log(tSN, typeof tSN);
+	// lista keys + values:
+	// for (const [key, value] of Object.entries(tS)) {
+	// 	console.log(`${key}: ${value}`);
+	// }
+	// deklaracja funkcji z keys (rozbicie)
+	// for (const [key] of Object.entries(tS)) {
+	// 	console.log('key:', `${key}`);
+	// }
+	// deklaracja funkcji z value (rozbicie)
+	// for (const [key, value] of Object.entries(tS)) {
+	// 	console.log('value:', `${value}`);
+	// }
+	const tSK = console.log(Object.keys(tS));
+	const tSV = console.log(Object.values(tS));
+};
+// asyncFetchAlphaRequestGET(); // wywołanie funkcji
+
+// Zad2
+// a) wyciągnij z otrzymanego obiektu obiekt 'Time Series (5min)
+// (bracket notations js)
+
+// b) rozbij ten obiekt na 2 listy: klucze i wartości (Object.entries(), Object.values(), Object.keys())
+// c) z listy wartości powyciągaj wartości low (pole '3. low') (konwersja do liczby( Number())) .map()!!!
+// d) odszukaj z tej listy najmniejszą wartość i wyświetl ją do konsoli
+// e) z listy wartości powyciągaj wartości high (pole '2. high')
+// f) odszukaj z tej listy największą wartość i wyświetl ją do konsoli
+// g) oblicz amplitude tych wartości (różnica między wartością najwięszką a najmniejszą)
+
+// 20:40 zadanie 2, 3:
+console.log('20:40 zadanie 2, 3:');
+// Zad 3.
+
+// a) znajdź i wypisz nazwę rozgrywek
+// b) znajdź i wypisz sezon jako string (format np. 'Sezon 1977/78', 'Sezon 2001/2002'), można to zrobić przy pomocy daty rozpoczęcia i zakończenia sezonu (.slice())
+// c) wypisz ile jest grup w tym sezonie
+// d) wypisz liderów z każdej grupy
+
+// const fetchFootballData = async () => {
+// 	const options = {
+// 		method: 'GET',
+// 		headers: {
+// 			'X-Auth-Token': '7e95e30581f0463fa9f837971ba1d7cc',
+// 		},
+// 	};
+
+// 	const response = await fetch(
+// 		'https://api.football-data.org/v2/competitions/CL/standings',
+// 		options
+// 	);
+
+// 	console.log(response);
+// 	console.log(response.status);
+// 	const data = await response.json();
+// 	console.log(data);
+// };
+// fetchFootballData(); // wywołanie funkcji
+
+const fetchFootballData = async () => {
+	const options = {
+		method: 'GET',
+		headers: {
+			'X-Auth-Token': '7e95e30581f0463fa9f837971ba1d7cc',
+		},
+	};
+
+	const response = await fetch(
+		'https://api.football-data.org/v2/competitions/CL/standings',
+		options
+	);
+
+	// console.log(response);
+	console.log(response.status);
+	const data = await response.json();
+	console.log(data);
+	const comp = Object.entries(data['competition']);
+	console.log(comp);
+	const compName = comp[2];
+	// const compName = comp.map((el) => el[0]);
+	console.log(compName, typeof compName);
+	const compName2 = compName[1];
+	console.log('Nazwa rozgrywek:', compName2, ', typ:' + typeof compName2);
+};
+fetchFootballData(); // wywołanie funkcji
