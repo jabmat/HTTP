@@ -475,5 +475,41 @@ const fetchFootballData = async () => {
 	console.log(compName, typeof compName);
 	const compName2 = compName[1];
 	console.log('Nazwa rozgrywek:', compName2, ', typ:' + typeof compName2);
+	// b)
+	const seasonStartYear = +data.season.startDate.slice(0, 4);
+	// console.log(seasonStartYear);
+	const seasonEndYear = +data.season.endDate.slice(0, 4);
+	// console.log(seasonEndYear);
+	const season = `Sezon ${seasonStartYear}/${seasonEndYear}`;
+	console.log(season);
+	// c)
+	const groupCount = data.standings.length;
+	console.log(`W tym sezonie jest ${groupCount}grup.`);
+	// d)
+	// ['AFC AJAX', 'Bayern Munich']
+	const groupLeaders = data.standings.map((group) => group.table[0].team.name);
+	console.log(groupLeaders);
+	console.log('Liderzy grup: ');
+	groupLeaders.forEach((groupLeader) => console.log(groupLeader));
 };
 fetchFootballData(); // wywołanie funkcji
+
+// przykład działania funkcji map
+const mx = [
+	{
+		name: '123',
+	},
+	{
+		name: '312',
+	},
+	{
+		name: '789',
+	},
+];
+
+const newList = mx.map((obj) => obj.name);
+// console.log('12.09 18:00, trening funkcji map, newList:', newList);
+
+const my = [1, 2, 3, 4];
+const newList2 = my.map((number) => number * 2);
+// console.log(newList2);
